@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -14,26 +16,35 @@ func main() {
 		Methods("GET").
 		Subrouter()
 
-	getR.HandleFunc("/", GetHandler)
-	getR.HandleFunc("/{pthVar0}", GetPathVarHandler)
-	getR.HandleFunc("/{pthVar0}/var2/{pthVar1}", Get2PathVarHandler)
-	getR.HandleFunc("/{pthVar0}/var2/{pthVar1}/closing", Get2PathVarHandler)
+	getR.HandleFunc("", NoBodyHandler)
+	getR.HandleFunc("/{pthVar0}", PathVarHandler)
+	getR.HandleFunc("/{pthVar0}/var2/{pthVar1}", TwoPathVarHandler)
+	getR.HandleFunc("/{pthVar0}/var2/{pthVar1}/closing", TwoPathVarHandler)
 
-	pstR := r.PathPrefix("/post").Subrouter()
-	pchR := r.PathPrefix("/patch").Subrouter()
-	putR := r.PathPrefix("/put").Subrouter()
-	delR := r.PathPrefix("/delete").Subrouter()
+	// pstR := r.PathPrefix("/post").Subrouter()
+	// pchR := r.PathPrefix("/patch").Subrouter()
+	// putR := r.PathPrefix("/put").Subrouter()
+	// delR := r.PathPrefix("/delete").Subrouter()
 
+	r.HandleFunc("/", NoBodyHandler)
+	srv := &http.Server{
+		Handler:      r,
+		Addr:         "127.0.0.1:8084",
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+
+	log.Fatal(srv.ListenAndServe())
 }
 
-func GetHandler(
+func NoBodyHandler(
 	res http.ResponseWriter,
 	req *http.Request,
 ) {
-	res.Write([]byte("Successful GET"))
+	res.Write([]byte("Successful No Body"))
 }
 
-func GetPathVarHandler(
+func PathVarHandler(
 	res http.ResponseWriter,
 	req *http.Request,
 ) {
@@ -41,12 +52,13 @@ func GetPathVarHandler(
 	if vars["pthVar0"] == "valid" {
 		res.WriteHeader(http.StatusOK)
 		res.Write([]byte("Successful GET"))
+		return
 	}
 	res.WriteHeader(http.StatusNotFound)
 	res.Write([]byte("Unsuccessful GET"))
 }
 
-func Get2PathVarHandler(
+func TwoPathVarHandler(
 	res http.ResponseWriter,
 	req *http.Request,
 ) {
@@ -54,6 +66,7 @@ func Get2PathVarHandler(
 	if vars["pthVar0"] == "valid" && vars["pthVar1"] == "valid" {
 		res.WriteHeader(http.StatusOK)
 		res.Write([]byte("Successful GET"))
+		return
 	}
 	res.WriteHeader(http.StatusNotFound)
 	res.Write([]byte("Unsuccessful GET"))
