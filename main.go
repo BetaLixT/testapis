@@ -29,6 +29,12 @@ func main() {
 		Methods("POST").
 		Subrouter()
 
+	pstR.HandleFunc("/body", BodyHandler)
+	pstR.HandleFunc("/body/{pthVar0}", BodyOneParamHandler)
+	pstR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
+	pstR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
+	pstR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyOneParamHandler)
+
 	pstR.HandleFunc("", NoBodyHandler)
 	pstR.HandleFunc("/{pthVar0}", PathVarHandler)
 	pstR.HandleFunc("/{pthVar0}/var2/{pthVar1}", TwoPathVarHandler)
@@ -100,7 +106,33 @@ func BodyHandler(
 		res.Write([]byte("Failed to parse"))
 		return
 	}
+	fmt.Printf("Value %+v", b)
+
 	if b.value != "valid" {
+		res.WriteHeader(http.StatusBadRequest)
+		res.Write([]byte(fmt.Sprintf("Invalid request %s", b.value)))
+		return
+	}
+	res.WriteHeader(http.StatusOK)
+	res.Write([]byte("Successful body no params"))
+
+}
+
+func BodyOneParamHandler(
+	res http.ResponseWriter,
+	req *http.Request,
+) {
+	var b SampleRequest
+
+	err := json.NewDecoder(req.Body).Decode(&b)
+	if err != nil {
+		res.WriteHeader(http.StatusUnprocessableEntity)
+		res.Write([]byte("Failed to parse"))
+		return
+	}
+	vars := mux.Vars(req)
+	param1 := vars["pthVar0"]
+	if b.value != "valid" || param1 != "valid" {
 		res.WriteHeader(http.StatusBadRequest)
 		res.Write([]byte("Invalid request"))
 		return
@@ -108,4 +140,31 @@ func BodyHandler(
 	res.WriteHeader(http.StatusOK)
 	res.Write([]byte("Successful body no params"))
 
+}
+
+func BodyTwoParamHandler(
+	res http.ResponseWriter,
+	req *http.Request,
+) {
+	var b SampleRequest
+
+	err := json.NewDecoder(req.Body).Decode(&b)
+	if err != nil {
+		res.WriteHeader(http.StatusUnprocessableEntity)
+		res.Write([]byte("Failed to parse"))
+		return
+	}
+	vars := mux.Vars(req)
+	param1 := vars["pthVar0"]
+	param2 := vars["pthVar1"]
+	isValid := b.value != "valid" ||
+		param1 != "valid" ||
+		param2 != "valid"
+	if isValid {
+		res.WriteHeader(http.StatusBadRequest)
+		res.Write([]byte("Invalid request"))
+		return
+	}
+	res.WriteHeader(http.StatusOK)
+	res.Write([]byte("Successful body no params"))
 }
