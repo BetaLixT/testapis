@@ -56,7 +56,7 @@ func main() {
 }
 
 type SampleRequest struct {
-	value string
+	Value string `json:"value"`
 }
 
 func NoBodyHandler(
@@ -106,11 +106,10 @@ func BodyHandler(
 		res.Write([]byte("Failed to parse"))
 		return
 	}
-	fmt.Printf("Value %+v", b)
 
-	if b.value != "valid" {
+	if b.Value != "valid" {
 		res.WriteHeader(http.StatusBadRequest)
-		res.Write([]byte(fmt.Sprintf("Invalid request %s", b.value)))
+		res.Write([]byte(fmt.Sprintf("Invalid request %s", b.Value)))
 		return
 	}
 	res.WriteHeader(http.StatusOK)
@@ -132,7 +131,7 @@ func BodyOneParamHandler(
 	}
 	vars := mux.Vars(req)
 	param1 := vars["pthVar0"]
-	if b.value != "valid" || param1 != "valid" {
+	if b.Value != "valid" || param1 != "valid" {
 		res.WriteHeader(http.StatusBadRequest)
 		res.Write([]byte("Invalid request"))
 		return
@@ -157,7 +156,7 @@ func BodyTwoParamHandler(
 	vars := mux.Vars(req)
 	param1 := vars["pthVar0"]
 	param2 := vars["pthVar1"]
-	isValid := b.value != "valid" ||
+	isValid := b.Value != "valid" ||
 		param1 != "valid" ||
 		param2 != "valid"
 	if isValid {
