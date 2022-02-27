@@ -21,6 +21,10 @@ func main() {
 		Subrouter()
 
 	getR.HandleFunc("", NoBodyHandler)
+	getR.HandleFunc("/oq", NoBodyOneQeryHandler)
+	getR.HandleFunc("/tq", NoBodyTwoQeryHandler)
+	getR.HandleFunc("/oq/{pthVar0}", NoBodyOneQeryOneParamHandler)
+	getR.HandleFunc("/tq/{pthVar0}", NoBodyOneQeryOneParamHandler)
 	getR.HandleFunc("/{pthVar0}", PathVarHandler)
 	getR.HandleFunc("/{pthVar0}/var2/{pthVar1}", TwoPathVarHandler)
 	getR.HandleFunc("/{pthVar0}/var2/{pthVar1}/closing", TwoPathVarHandler)
@@ -110,6 +114,9 @@ type SampleResponse struct {
 	Success  bool   `json:"success"`
 }
 
+// TODO these functions can be a lot less stupid
+// but this was just a dumb throw away app to learn
+// stuff soo.... TODON'T?
 func NoBodyHandler(
 	res http.ResponseWriter,
 	req *http.Request,
@@ -120,6 +127,57 @@ func NoBodyHandler(
 		http.StatusOK,
 		"Successful No body",
 		true,
+	)
+}
+
+func NoBodyOneQeryHandler(
+	res http.ResponseWriter,
+	req *http.Request,
+) {
+	query := req.URL.Query()
+	var0 := query.Get("var0")
+
+	if var0 == "valid" {
+		writeResponse(
+			&res,
+			http.StatusOK,
+			"Successful No body one query",
+			true,
+		)
+		return
+	}
+
+	writeResponse(
+		&res,
+		http.StatusNotFound,
+		"Unsuccessful No body one query",
+		false,
+	)
+}
+
+func NoBodyTwoQeryHandler(
+	res http.ResponseWriter,
+	req *http.Request,
+) {
+	query := req.URL.Query()
+	var0 := query.Get("var0")
+	var1 := query.Get("var1")
+
+	if var0 == "valid" && var1 == "valid" {
+		writeResponse(
+			&res,
+			http.StatusOK,
+			"Successful No body two query",
+			true,
+		)
+		return
+	}
+
+	writeResponse(
+		&res,
+		http.StatusNotFound,
+		"Unsuccessful No body two query",
+		false,
 	)
 }
 
@@ -143,6 +201,77 @@ func PathVarHandler(
 		http.StatusNotFound,
 		"Unsuccessful one param",
 		false,
+	)
+}
+
+func NoBodyOneQeryOneParamHandler(
+	res http.ResponseWriter,
+	req *http.Request,
+) {
+	query := req.URL.Query()
+	var0 := query.Get("var0")
+
+	if var0 != "valid" {
+		writeResponse(
+			&res,
+			http.StatusNotFound,
+			"Unsuccessful No body one query",
+			false,
+		)
+		return
+	}
+	vars := mux.Vars(req)
+	if vars["pthVar0"] != "valid" {
+		writeResponse(
+			&res,
+			http.StatusNotFound,
+			"Unsuccessful No body one query",
+			false,
+		)
+		return
+	}
+
+	writeResponse(
+		&res,
+		http.StatusOK,
+		"Successful No body one query",
+		true,
+	)
+}
+
+func NoBodyTwoQeryOneParamHandler(
+	res http.ResponseWriter,
+	req *http.Request,
+) {
+	query := req.URL.Query()
+	var0 := query.Get("var0")
+	var1 := query.Get("var1")
+
+	if var0 != "valid" || var1 != "valid" {
+		writeResponse(
+			&res,
+			http.StatusNotFound,
+			"Unsuccessful No body two query",
+			false,
+		)
+		return
+	}
+
+	vars := mux.Vars(req)
+	if vars["pthVar0"] != "valid" {
+		writeResponse(
+			&res,
+			http.StatusNotFound,
+			"Unsuccessful No body one query",
+			false,
+		)
+		return
+	}
+	writeResponse(
+		&res,
+		http.StatusOK,
+		"Successful No body two query",
+		true,
 	)
 }
 
