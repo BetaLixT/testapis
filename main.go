@@ -31,9 +31,8 @@ func main() {
 
 	pstR.HandleFunc("/body", BodyHandler)
 	pstR.HandleFunc("/body/{pthVar0}", BodyOneParamHandler)
-	pstR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
-	pstR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
-	pstR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyOneParamHandler)
+	pstR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyTwoParamHandler)
+	pstR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyTwoParamHandler)
 
 	pstR.HandleFunc("", NoBodyHandler)
 	pstR.HandleFunc("/{pthVar0}", PathVarHandler)
@@ -47,9 +46,8 @@ func main() {
 
 	putR.HandleFunc("/body", BodyHandler)
 	putR.HandleFunc("/body/{pthVar0}", BodyOneParamHandler)
-	putR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
-	putR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
-	putR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyOneParamHandler)
+	putR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyTwoParamHandler)
+	putR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyTwoParamHandler)
 
 	putR.HandleFunc("", NoBodyHandler)
 	putR.HandleFunc("/{pthVar0}", PathVarHandler)
@@ -63,9 +61,8 @@ func main() {
 
 	pchR.HandleFunc("/body", BodyHandler)
 	pchR.HandleFunc("/body/{pthVar0}", BodyOneParamHandler)
-	pchR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
-	pchR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
-	pchR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyOneParamHandler)
+	pchR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyTwoParamHandler)
+	pchR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyTwoParamHandler)
 
 	pchR.HandleFunc("", NoBodyHandler)
 	pchR.HandleFunc("/{pthVar0}", PathVarHandler)
@@ -79,9 +76,8 @@ func main() {
 
 	delR.HandleFunc("/body", BodyHandler)
 	delR.HandleFunc("/body/{pthVar0}", BodyOneParamHandler)
-	delR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
-	delR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
-	delR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyOneParamHandler)
+	delR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyTwoParamHandler)
+	delR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyTwoParamHandler)
 
 	delR.HandleFunc("", NoBodyHandler)
 	delR.HandleFunc("/{pthVar0}", PathVarHandler)
