@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -89,9 +90,14 @@ func main() {
 	// delR := r.PathPrefix("/delete").Subrouter()
 
 	r.HandleFunc("/", NoBodyHandler)
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8084"
+	}
 	srv := &http.Server{
 		Handler:      r,
-		Addr:         "127.0.0.1:8084",
+		Addr:         fmt.Sprintf("127.0.0.1:%s", port),
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
