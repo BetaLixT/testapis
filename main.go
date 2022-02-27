@@ -85,10 +85,6 @@ func main() {
 	delR.HandleFunc("/{pthVar0}/var2/{pthVar1}", TwoPathVarHandler)
 	delR.HandleFunc("/{pthVar0}/var2/{pthVar1}/closing", TwoPathVarHandler)
 
-	// pchR := r.PathPrefix("/patch").Subrouter()
-	// putR := r.PathPrefix("/put").Subrouter()
-	// delR := r.PathPrefix("/delete").Subrouter()
-
 	r.HandleFunc("/", NoBodyHandler)
 
 	port := os.Getenv("PORT")
@@ -101,7 +97,7 @@ func main() {
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
-	fmt.Printf("Listening to port %s", port)
+	fmt.Printf("Listening to port %s...\n", port)
 	log.Fatal(srv.ListenAndServe())
 }
 
@@ -109,11 +105,22 @@ type SampleRequest struct {
 	Value string `json:"value"`
 }
 
+type SampleResponse struct {
+	Response string `json:"response"`
+	Success  bool   `json:"success"`
+}
+
 func NoBodyHandler(
 	res http.ResponseWriter,
 	req *http.Request,
 ) {
-	res.Write([]byte("Successful No Body"))
+
+	writeResponse(
+		&res,
+		http.StatusOK,
+		"Successful No body",
+		true,
+	)
 }
 
 func PathVarHandler(
@@ -122,12 +129,21 @@ func PathVarHandler(
 ) {
 	vars := mux.Vars(req)
 	if vars["pthVar0"] == "valid" {
-		res.WriteHeader(http.StatusOK)
-		res.Write([]byte("Successful one param"))
+		writeResponse(
+			&res,
+			http.StatusOK,
+			"Successful one param",
+			true,
+		)
 		return
 	}
-	res.WriteHeader(http.StatusNotFound)
-	res.Write([]byte("Unsuccessful one param"))
+
+	writeResponse(
+		&res,
+		http.StatusNotFound,
+		"Unsuccessful one param",
+		false,
+	)
 }
 
 func TwoPathVarHandler(
@@ -136,12 +152,21 @@ func TwoPathVarHandler(
 ) {
 	vars := mux.Vars(req)
 	if vars["pthVar0"] == "valid" && vars["pthVar1"] == "valid" {
-		res.WriteHeader(http.StatusOK)
-		res.Write([]byte("Successful two param"))
+		writeResponse(
+			&res,
+			http.StatusOK,
+			"Successful two param",
+			true,
+		)
 		return
 	}
-	res.WriteHeader(http.StatusNotFound)
-	res.Write([]byte("Unsuccessful two param"))
+
+	writeResponse(
+		&res,
+		http.StatusNotFound,
+		"Unsuccessful two param",
+		false,
+	)
 }
 
 func BodyHandler(
@@ -152,19 +177,31 @@ func BodyHandler(
 
 	err := json.NewDecoder(req.Body).Decode(&b)
 	if err != nil {
-		res.WriteHeader(http.StatusUnprocessableEntity)
-		res.Write([]byte("Failed to parse"))
+		writeResponse(
+			&res,
+			http.StatusUnprocessableEntity,
+			"Failed to parse",
+			false,
+		)
 		return
 	}
 
 	if b.Value != "valid" {
-		res.WriteHeader(http.StatusBadRequest)
-		res.Write([]byte(fmt.Sprintf("Invalid request %s", b.Value)))
+		writeResponse(
+			&res,
+			http.StatusBadRequest,
+			fmt.Sprintf("Invalid request %s", b.Value),
+			false,
+		)
 		return
 	}
-	res.WriteHeader(http.StatusOK)
-	res.Write([]byte("Successful body no params"))
 
+	writeResponse(
+		&res,
+		http.StatusOK,
+		"Successful body no params",
+		true,
+	)
 }
 
 func BodyOneParamHandler(
@@ -175,19 +212,44 @@ func BodyOneParamHandler(
 
 	err := json.NewDecoder(req.Body).Decode(&b)
 	if err != nil {
-		res.WriteHeader(http.StatusUnprocessableEntity)
-		res.Write([]byte("Failed to parse"))
+		writeResponse(
+			&res,
+			http.StatusUnprocessableEntity,
+			"Failed to parse",
+			false,
+		)
 		return
 	}
 	vars := mux.Vars(req)
 	param1 := vars["pthVar0"]
-	if b.Value != "valid" || param1 != "valid" {
-		res.WriteHeader(http.StatusBadRequest)
-		res.Write([]byte("Invalid request"))
+	if b.Value != "valid" {
+
+		writeResponse(
+			&res,
+			http.StatusBadRequest,
+			"Invalid request",
+			false,
+		)
 		return
 	}
-	res.WriteHeader(http.StatusOK)
-	res.Write([]byte("Successful body one param"))
+
+	if param1 != "valid" {
+
+		writeResponse(
+			&res,
+			http.StatusNotFound,
+			"Unsuccesful body one param",
+			false,
+		)
+		return
+	}
+
+	writeResponse(
+		&res,
+		http.StatusOK,
+		"Successful body one param",
+		true,
+	)
 
 }
 
@@ -206,14 +268,54 @@ func BodyTwoParamHandler(
 	vars := mux.Vars(req)
 	param1 := vars["pthVar0"]
 	param2 := vars["pthVar1"]
-	isValid := b.Value != "valid" ||
-		param1 != "valid" ||
-		param2 != "valid"
-	if isValid {
-		res.WriteHeader(http.StatusBadRequest)
-		res.Write([]byte("Invalid request"))
+
+	if b.Value != "valid" {
+		writeResponse(
+			&res,
+			http.StatusBadRequest,
+			"Invalid request",
+			false,
+		)
 		return
 	}
-	res.WriteHeader(http.StatusOK)
-	res.Write([]byte("Successful body two params"))
+
+	if param1 != "valid" || param2 != "valid" {
+
+		writeResponse(
+			&res,
+			http.StatusNotFound,
+			"Unsuccesful body two params",
+			false,
+		)
+		return
+	}
+
+	writeResponse(
+		&res,
+		http.StatusOK,
+		"Successful body two params",
+		false,
+	)
+}
+
+func writeResponse(
+	res *http.ResponseWriter,
+	statusCode int,
+	response string,
+	success bool,
+) {
+
+	pld, err := json.Marshal(SampleResponse{
+		Response: response,
+		Success:  success,
+	})
+	if err != nil {
+		// Should not be happening...
+		(*res).WriteHeader(http.StatusInternalServerError)
+		(*res).Write([]byte("Failed to marshal response"))
+		return
+	}
+	(*res).Header().Set("Content-Type", "application/json")
+	(*res).WriteHeader(statusCode)
+	(*res).Write(pld)
 }
