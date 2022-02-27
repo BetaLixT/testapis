@@ -294,7 +294,7 @@ func BodyTwoParamHandler(
 		&res,
 		http.StatusOK,
 		"Successful body two params",
-		false,
+		true,
 	)
 }
 
