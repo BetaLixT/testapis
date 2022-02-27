@@ -56,6 +56,38 @@ func main() {
 	putR.HandleFunc("/{pthVar0}/var2/{pthVar1}", TwoPathVarHandler)
 	putR.HandleFunc("/{pthVar0}/var2/{pthVar1}/closing", TwoPathVarHandler)
 
+	// - Patch
+	pchR := r.PathPrefix("/patch").
+		Methods("PATCH").
+		Subrouter()
+
+	pchR.HandleFunc("/body", BodyHandler)
+	pchR.HandleFunc("/body/{pthVar0}", BodyOneParamHandler)
+	pchR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
+	pchR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
+	pchR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyOneParamHandler)
+
+	pchR.HandleFunc("", NoBodyHandler)
+	pchR.HandleFunc("/{pthVar0}", PathVarHandler)
+	pchR.HandleFunc("/{pthVar0}/var2/{pthVar1}", TwoPathVarHandler)
+	pchR.HandleFunc("/{pthVar0}/var2/{pthVar1}/closing", TwoPathVarHandler)
+
+	// - Delete
+	delR := r.PathPrefix("/delete").
+		Methods("DELETE").
+		Subrouter()
+
+	delR.HandleFunc("/body", BodyHandler)
+	delR.HandleFunc("/body/{pthVar0}", BodyOneParamHandler)
+	delR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
+	delR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
+	delR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyOneParamHandler)
+
+	delR.HandleFunc("", NoBodyHandler)
+	delR.HandleFunc("/{pthVar0}", PathVarHandler)
+	delR.HandleFunc("/{pthVar0}/var2/{pthVar1}", TwoPathVarHandler)
+	delR.HandleFunc("/{pthVar0}/var2/{pthVar1}/closing", TwoPathVarHandler)
+
 	// pchR := r.PathPrefix("/patch").Subrouter()
 	// putR := r.PathPrefix("/put").Subrouter()
 	// delR := r.PathPrefix("/delete").Subrouter()
