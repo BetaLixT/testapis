@@ -40,6 +40,22 @@ func main() {
 	pstR.HandleFunc("/{pthVar0}/var2/{pthVar1}", TwoPathVarHandler)
 	pstR.HandleFunc("/{pthVar0}/var2/{pthVar1}/closing", TwoPathVarHandler)
 
+	// - Put
+	putR := r.PathPrefix("/put").
+		Methods("PUT").
+		Subrouter()
+
+	putR.HandleFunc("/body", BodyHandler)
+	putR.HandleFunc("/body/{pthVar0}", BodyOneParamHandler)
+	putR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
+	putR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyOneParamHandler)
+	putR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyOneParamHandler)
+
+	putR.HandleFunc("", NoBodyHandler)
+	putR.HandleFunc("/{pthVar0}", PathVarHandler)
+	putR.HandleFunc("/{pthVar0}/var2/{pthVar1}", TwoPathVarHandler)
+	putR.HandleFunc("/{pthVar0}/var2/{pthVar1}/closing", TwoPathVarHandler)
+
 	// pchR := r.PathPrefix("/patch").Subrouter()
 	// putR := r.PathPrefix("/put").Subrouter()
 	// delR := r.PathPrefix("/delete").Subrouter()
@@ -137,7 +153,7 @@ func BodyOneParamHandler(
 		return
 	}
 	res.WriteHeader(http.StatusOK)
-	res.Write([]byte("Successful body no params"))
+	res.Write([]byte("Successful body one param"))
 
 }
 
@@ -165,5 +181,5 @@ func BodyTwoParamHandler(
 		return
 	}
 	res.WriteHeader(http.StatusOK)
-	res.Write([]byte("Successful body no params"))
+	res.Write([]byte("Successful body two params"))
 }
