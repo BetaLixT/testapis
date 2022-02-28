@@ -9,170 +9,353 @@
 			"name": "get",
 			"item": [
 				{
-					"name": "Get No Params",
+					"name": "successful",
+					"item": [
+						{
+							"name": "Get No Params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful No body\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/get",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get One Param",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/get/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"get",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Two Params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/get/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"get",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Two Params with closing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/get/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"get",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
+									"pm.test(\"Ensure response status is success\", function() {",
+									"    responseJson = pm.response.json();",
+									"    pm.expect(responseJson.success).to.eql(true)",
+									"})",
+									"",
 									"pm.test(\"Ensure status code\", function() {",
 									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful No Body\")",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/get",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"get"
-							]
-						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Get One Param",
+					"name": "not found",
+					"item": [
+						{
+							"name": "Get One Param Not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/get/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"get",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Two Params Not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/get/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"get",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Two Params with closing Not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/get/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"get",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
+									"pm.test(\"Ensure response status is success\", function() {",
+									"    responseJson = pm.response.json();",
+									"    pm.expect(responseJson.success).to.eql(false)",
 									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful one param\")",
+									"",
+									"pm.test(\"Ensure status code\", function() {",
+									"    pm.response.to.have.status(404)",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/get/:param0",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"get",
-								":param0"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Two Params",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful two param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/get/:param0/var2/:param1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"get",
-								":param0",
-								"var2",
-								":param1"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
-								},
-								{
-									"key": "param1",
-									"value": "valid"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Two Params with closing",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful two param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/get/:param0/var2/:param1/closing",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"get",
-								":param0",
-								"var2",
-								":param1",
-								"closing"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
-								},
-								{
-									"key": "param1",
-									"value": "valid"
-								}
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -180,376 +363,708 @@
 			"name": "post",
 			"item": [
 				{
-					"name": "Post No Params",
-					"event": [
+					"name": "successful",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful No Body\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/post",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"post"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post One Param",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful one param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/post/:param0",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"post",
-								":param0"
-							],
-							"variable": [
+							"name": "Post No Params",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful No body\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post Two Params",
-					"event": [
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/post",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful two param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/post/:param0/var2/:param1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"post",
-								":param0",
-								"var2",
-								":param1"
-							],
-							"variable": [
+							"name": "Post One Param",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/post/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Two Params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/post/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post two Params with closing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/post/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post No Params with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body no params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/post/body",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										"body"
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post two Params with closing",
-					"event": [
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful two param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/post/:param0/var2/:param1/closing",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"post",
-								":param0",
-								"var2",
-								":param1",
-								"closing"
-							],
-							"variable": [
+							"name": "Post One Param with Body",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/post/body/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										"body",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										}
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post No Params with Body",
-					"event": [
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body no params\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
+							"name": "Post Two Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/post/body/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										"body",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Two param with closing and Body ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/post/body/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										"body",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/post/body",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"post",
-								"body"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post One Param with Body",
-					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
+									"pm.test(\"Ensure response status is success\", function() {",
+									"    responseJson = pm.response.json();",
+									"    pm.expect(responseJson.success).to.eql(true)",
+									"})",
+									"",
 									"pm.test(\"Ensure status code\", function() {",
 									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body one param\")",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/post/body/:param0",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"post",
-								"body",
-								":param0"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
-								}
-							]
-						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Post Two Param with Body",
-					"event": [
+					"name": "not found",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body two params\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/post/body/:param0/var2/:param1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"post",
-								"body",
-								":param0",
-								"var2",
-								":param1"
-							],
-							"variable": [
+							"name": "Post One Param",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/post/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Two Params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/post/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post two Params with closing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/post/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post One Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/post/body/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										"body",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										}
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "Post Two Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/post/body/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										"body",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Two param with closing and Body ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/post/body/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"post",
+										"body",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post Two param with closing and Body ",
+					],
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
+									"pm.test(\"Ensure response status is success\", function() {",
+									"    responseJson = pm.response.json();",
+									"    pm.expect(responseJson.success).to.eql(false)",
 									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body two params\")",
+									"",
+									"pm.test(\"Ensure status code\", function() {",
+									"    pm.response.to.have.status(404)",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/post/body/:param0/var2/:param1/closing",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"post",
-								"body",
-								":param0",
-								"var2",
-								":param1",
-								"closing"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
-								},
-								{
-									"key": "param1",
-									"value": "valid"
-								}
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -557,383 +1072,715 @@
 			"name": "put",
 			"item": [
 				{
-					"name": "Put No Params",
-					"event": [
+					"name": "successful",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful No Body\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/put",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"put"
-							],
-							"query": [
+							"name": "Put No Params",
+							"event": [
 								{
-									"key": "",
-									"value": "valid",
-									"disabled": true
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful No body\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Put One Param",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful one param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/put/:param0",
-							"host": [
-								"{{baseUrl}}"
 							],
-							"path": [
-								"put",
-								":param0"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/put",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "valid",
+											"disabled": true
+										}
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Put Two Params",
-					"event": [
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful two param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/put/:param0/var2/:param1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"put",
-								":param0",
-								"var2",
-								":param1"
-							],
-							"variable": [
+							"name": "Put One Param",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/put/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put Two Params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/put/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put two Params with closing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/put/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put No Params with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body no params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/put/body",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										"body"
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Put two Params with closing",
-					"event": [
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful two param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/put/:param0/var2/:param1/closing",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"put",
-								":param0",
-								"var2",
-								":param1",
-								"closing"
-							],
-							"variable": [
+							"name": "Put One Param with Body",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/put/body/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										"body",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										}
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Put No Params with Body",
-					"event": [
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body no params\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
+							"name": "Put Two Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/put/body/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										"body",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put Two param with closing and Body ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/put/body/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										"body",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/put/body",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"put",
-								"body"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Put One Param with Body",
-					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
+									"pm.test(\"Ensure response status is success\", function() {",
+									"    responseJson = pm.response.json();",
+									"    pm.expect(responseJson.success).to.eql(true)",
+									"})",
+									"",
 									"pm.test(\"Ensure status code\", function() {",
 									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body one param\")",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/put/body/:param0",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"put",
-								"body",
-								":param0"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
-								}
-							]
-						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Put Two Param with Body",
-					"event": [
+					"name": "not found",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body two params\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/put/body/:param0/var2/:param1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"put",
-								"body",
-								":param0",
-								"var2",
-								":param1"
-							],
-							"variable": [
+							"name": "Put One Param",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/put/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put Two Params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/put/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put two Params with closing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/put/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put One Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/put/body/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										"body",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										}
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "Put Two Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/put/body/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										"body",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put Two param with closing and Body ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/put/body/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put",
+										"body",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Put Two param with closing and Body ",
+					],
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
+									"pm.test(\"Ensure response status is success\", function() {",
+									"    responseJson = pm.response.json();",
+									"    pm.expect(responseJson.success).to.eql(false)",
 									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body two params\")",
+									"",
+									"pm.test(\"Ensure status code\", function() {",
+									"    pm.response.to.have.status(404)",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/put/body/:param0/var2/:param1/closing",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"put",
-								"body",
-								":param0",
-								"var2",
-								":param1",
-								"closing"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
-								},
-								{
-									"key": "param1",
-									"value": "valid"
-								}
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -941,383 +1788,715 @@
 			"name": "patch",
 			"item": [
 				{
-					"name": "Patch No Params",
-					"event": [
+					"name": "successful",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful No Body\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/patch",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"patch"
-							],
-							"query": [
+							"name": "Patch No Params",
+							"event": [
 								{
-									"key": null,
-									"value": "",
-									"disabled": true
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful No body\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Patch One Param",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful one param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/patch/:param0",
-							"host": [
-								"{{baseUrl}}"
 							],
-							"path": [
-								"patch",
-								":param0"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/patch",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch"
+									],
+									"query": [
+										{
+											"key": null,
+											"value": "",
+											"disabled": true
+										}
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Patch Two Params",
-					"event": [
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful two param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/patch/:param0/var2/:param1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"patch",
-								":param0",
-								"var2",
-								":param1"
-							],
-							"variable": [
+							"name": "Patch One Param",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/patch/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Two Params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/patch/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch two Params with closing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/patch/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch No Params with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body no params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/patch/body",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										"body"
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Patch two Params with closing",
-					"event": [
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful two param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/patch/:param0/var2/:param1/closing",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"patch",
-								":param0",
-								"var2",
-								":param1",
-								"closing"
-							],
-							"variable": [
+							"name": "Patch One Param with Body",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/patch/body/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										"body",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										}
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Patch No Params with Body",
-					"event": [
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body no params\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
+							"name": "Patch Two Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/patch/body/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										"body",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Two param with closing and Body ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/patch/body/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										"body",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/patch/body",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"patch",
-								"body"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Patch One Param with Body",
-					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
+									"pm.test(\"Ensure response status is success\", function() {",
+									"    responseJson = pm.response.json();",
+									"    pm.expect(responseJson.success).to.eql(true)",
+									"})",
+									"",
 									"pm.test(\"Ensure status code\", function() {",
 									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body one param\")",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/patch/body/:param0",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"patch",
-								"body",
-								":param0"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
-								}
-							]
-						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Patch Two Param with Body",
-					"event": [
+					"name": "not found",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body two params\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/patch/body/:param0/var2/:param1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"patch",
-								"body",
-								":param0",
-								"var2",
-								":param1"
-							],
-							"variable": [
+							"name": "Patch One Param",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/patch/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Two Params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/patch/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch two Params with closing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/patch/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch One Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/patch/body/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										"body",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										}
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Two Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/patch/body/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										"body",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Two param with closing and Body ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/patch/body/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patch",
+										"body",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Patch Two param with closing and Body ",
+					],
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
+									"pm.test(\"Ensure response status is success\", function() {",
+									"    responseJson = pm.response.json();",
+									"    pm.expect(responseJson.success).to.eql(false)",
 									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body two params\")",
+									"",
+									"pm.test(\"Ensure status code\", function() {",
+									"    pm.response.to.have.status(404)",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/patch/body/:param0/var2/:param1/closing",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"patch",
-								"body",
-								":param0",
-								"var2",
-								":param1",
-								"closing"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
-								},
-								{
-									"key": "param1",
-									"value": "valid"
-								}
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -1325,376 +2504,708 @@
 			"name": "delete",
 			"item": [
 				{
-					"name": "Delete No Params",
-					"event": [
+					"name": "successful",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful No Body\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/delete",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"delete"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete One Param",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful one param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/delete/:param0",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"delete",
-								":param0"
-							],
-							"variable": [
+							"name": "Delete No Params",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful No body\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Two Params",
-					"event": [
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/delete",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete"
+									]
+								}
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful two param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/delete/:param0/var2/:param1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"delete",
-								":param0",
-								"var2",
-								":param1"
-							],
-							"variable": [
+							"name": "Delete One Param",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/delete/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Two Params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/delete/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete two Params with closing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/delete/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete No Params with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body no params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/delete/body",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										"body"
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete two Params with closing",
-					"event": [
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful two param\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/delete/:param0/var2/:param1/closing",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"delete",
-								":param0",
-								"var2",
-								":param1",
-								"closing"
-							],
-							"variable": [
+							"name": "Delete One Param with Body",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/delete/body/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										"body",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										}
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete No Params with Body",
-					"event": [
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body no params\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
+							"name": "Delete Two Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/delete/body/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										"body",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Two param with closing and Body ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Successful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/delete/body/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										"body",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/delete/body",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"delete",
-								"body"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete One Param with Body",
-					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
+									"pm.test(\"Ensure response status is success\", function() {",
+									"    responseJson = pm.response.json();",
+									"    pm.expect(responseJson.success).to.eql(true)",
+									"})",
+									"",
 									"pm.test(\"Ensure status code\", function() {",
 									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body one param\")",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/delete/body/:param0",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"delete",
-								"body",
-								":param0"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
-								}
-							]
-						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Delete Two Param with Body",
-					"event": [
+					"name": "not found",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body two params\")",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/delete/body/:param0/var2/:param1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"delete",
-								"body",
-								":param0",
-								"var2",
-								":param1"
-							],
-							"variable": [
+							"name": "Delete One Param",
+							"event": [
 								{
-									"key": "param0",
-									"value": "valid"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/delete/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Two Params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/delete/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete two Params with closing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccessful two param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/delete/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete One Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body one param\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "param1",
-									"value": "valid"
+								"url": {
+									"raw": "{{baseUrl}}/delete/body/:param0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										"body",
+										":param0"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										}
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Two Param with Body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/delete/body/:param0/var2/:param1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										"body",
+										":param0",
+										"var2",
+										":param1"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "valid"
+										},
+										{
+											"key": "param1",
+											"value": "missing"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Two param with closing and Body ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ensure expected message\", function() {",
+											"    responseJson = pm.response.json();",
+											"    pm.expect(responseJson.response).to.eql(\"Unsuccesful body two params\")",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"valid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/delete/body/:param0/var2/:param1/closing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delete",
+										"body",
+										":param0",
+										"var2",
+										":param1",
+										"closing"
+									],
+									"variable": [
+										{
+											"key": "param0",
+											"value": "missing"
+										},
+										{
+											"key": "param1",
+											"value": "valid"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Two param with closing and Body ",
+					],
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
-									"pm.test(\"Ensure status code\", function() {",
-									"    pm.response.to.have.status(200)",
+									"pm.test(\"Ensure response status is success\", function() {",
+									"    responseJson = pm.response.json();",
+									"    pm.expect(responseJson.success).to.eql(false)",
 									"})",
-									"pm.test(\"Ensure expected message\", function() {",
-									"    pm.response.to.have.body(\"Successful body two params\")",
+									"",
+									"pm.test(\"Ensure status code\", function() {",
+									"    pm.response.to.have.status(404)",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"value\": \"valid\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/delete/body/:param0/var2/:param1/closing",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"delete",
-								"body",
-								":param0",
-								"var2",
-								":param1",
-								"closing"
-							],
-							"variable": [
-								{
-									"key": "param0",
-									"value": "valid"
-								},
-								{
-									"key": "param1",
-									"value": "valid"
-								}
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		}
