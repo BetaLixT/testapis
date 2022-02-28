@@ -35,6 +35,7 @@ func main() {
 		Subrouter()
 
 	pstR.HandleFunc("/body", BodyHandler)
+	pstR.HandleFunc("/form/{pthVar0}", FormOnePathParam)
 	pstR.HandleFunc("/body/{pthVar0}", BodyOneParamHandler)
 	pstR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}", BodyTwoParamHandler)
 	pstR.HandleFunc("/body/{pthVar0}/var2/{pthVar1}/closing", BodyTwoParamHandler)
@@ -423,6 +424,39 @@ func BodyTwoParamHandler(
 		&res,
 		http.StatusOK,
 		"Successful body two params",
+		true,
+	)
+}
+
+func FormOnePathParam(res http.ResponseWriter, req *http.Request) {
+
+	vars := mux.Vars(req)
+	pthVar0 := vars["pthVar0"]
+	if pthVar0 != "valid" {
+		writeResponse(
+			&res,
+			404,
+			"Unsuccessful Form One Param",
+			false,
+		)
+		return
+	}
+
+	formVar0 := req.FormValue("var0")
+	if formVar0 != "valid" {
+		writeResponse(
+			&res,
+			400,
+			"Unsuccessful Form One Param",
+			false,
+		)
+		return
+	}
+
+	writeResponse(
+		&res,
+		200,
+		"Successful Form One Param",
 		true,
 	)
 }
